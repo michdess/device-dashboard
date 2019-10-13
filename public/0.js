@@ -37,28 +37,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  inject: ["deviceState"],
   name: 'Dashboard',
   components: {
     DeviceCard: _DeviceCard__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
-      devices: '',
-      loading: true
+      devices: '' // loading: true,
+
     };
   },
-  created: function created() {
-    this.getDevices();
+  created: function created() {// this.getDevices();
   },
   methods: {
     getDevices: function getDevices() {
       var self = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/devices').then(function (response) {
-        self.devices = response.data;
-        self.loading = false;
+        self.devices = response.data; // self.loading = false;
       });
     },
     addDevice: function addDevice() {
@@ -68,6 +69,11 @@ __webpack_require__.r(__webpack_exports__);
         'name': 'New Device',
         'value': '12'
       });
+    }
+  },
+  computed: {
+    loading: function loading() {
+      return this.deviceState.loading;
     }
   }
 });
@@ -135,7 +141,19 @@ var render = function() {
     { staticClass: "w-full max-w-full flex flex-wrap" },
     [
       _vm.loading
-        ? _c("div", [_vm._v("Loading device data...")])
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "absolute top-0 left-0 right-0 bottom-0 flex w-full items-center justify-center"
+            },
+            [
+              _c("moon-loader", {
+                attrs: { loading: _vm.loading, size: 100, sizeUnit: _vm.px }
+              })
+            ],
+            1
+          )
         : [
             _c("div", { staticClass: "flex w-full sm:w-1/2 lg:w-1/5 p-2" }, [
               _c(
@@ -191,7 +209,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._l(_vm.devices, function(device) {
+            _vm._l(_vm.deviceState.devices, function(device) {
               return _c("DeviceCard", {
                 key: device.id,
                 attrs: { device: device }

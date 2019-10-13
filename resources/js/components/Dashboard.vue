@@ -1,6 +1,8 @@
 <template>
   <div class="w-full max-w-full flex flex-wrap">
-    <div v-if="loading">Loading device data...</div>
+    <div v-if="loading" class="absolute top-0 left-0 right-0 bottom-0 flex w-full items-center justify-center">
+    <moon-loader :loading="loading" :size="100" :sizeUnit="px"></moon-loader>
+  </div>
     <template v-else>
         <div class="flex w-full sm:w-1/2 lg:w-1/5 p-2">
           <div class="p-4 flex items-center justify-between w-full bg-white shadow-lg rounded cursor-pointer" @click="addDevice">
@@ -18,7 +20,7 @@
               </p>
           </div>
         </div>
-        <DeviceCard v-for="device in devices" :key="device.id" :device="device"></DeviceCard>
+        <DeviceCard v-for="device in deviceState.devices" :key="device.id" :device="device"></DeviceCard>
       </template>
   </div>
 </template>
@@ -27,6 +29,7 @@
 import axios from 'axios';
 import DeviceCard from './DeviceCard';
 export default {
+  inject: ["deviceState"],
   name: 'Dashboard',
   components:{
     DeviceCard
@@ -34,11 +37,11 @@ export default {
   data(){
     return{
       devices: '',
-      loading: true,
+      // loading: true,
     }
   },
   created(){
-    this.getDevices();
+    // this.getDevices();
   },
   methods:{
     getDevices(){
@@ -46,12 +49,17 @@ export default {
       axios.get('/devices')
               .then(response => {
                   self.devices = response.data;
-                  self.loading = false;
+                  // self.loading = false;
               }); 
     },
     addDevice(){
       this.devices.push({'id': this.devices.length + 1, 'type': 'some type', 'name': 'New Device', 'value': '12'});
     },
-  }
+  },
+  computed:{
+    loading(){
+        return this.deviceState.loading;
+    }
+  },
 }
 </script>

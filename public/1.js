@@ -37,6 +37,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['device'],
@@ -58,13 +60,6 @@ __webpack_require__.r(__webpack_exports__);
         self.getTypes();
       });
     },
-    getData: function getData() {
-      var _this = this;
-
-      return this.data.map(function (item) {
-        return _this.item.type.push(item);
-      });
-    },
     getTypes: function getTypes() {
       this.types = new Set(this.data.map(function (item) {
         return item.type;
@@ -77,27 +72,16 @@ __webpack_require__.r(__webpack_exports__);
       });
       seriesData = seriesData.sort(function (a, b) {
         return a.createdAt - b.createdAt;
-      }); // let seriesValues = seriesData.map(item => [ Date.parse(item.createdAt) , item.value]);
-
+      });
       var seriesValues = seriesData.map(function (item) {
         return {
           x: item.createdAt,
           y: item.value
         };
-      }); // return [{name: type ,data: seriesValues}];
-
+      });
       return [{
         data: seriesValues
       }];
-    },
-    findOptions: function findOptions(type) {
-      console.log(type);
-      return {
-        xaxis: {
-          type: 'datetime',
-          tickAmount: 'dataPoints'
-        }
-      };
     }
   },
   created: function created() {
@@ -130,7 +114,19 @@ var render = function() {
       { staticClass: "-mx-2 w-full flex flex-wrap" },
       [
         _vm.loading
-          ? _c("div", [_vm._v("Getting devices and readigs...")])
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "absolute top-0 left-0 right-0 bottom-0 flex w-full items-center justify-center"
+              },
+              [
+                _c("moon-loader", {
+                  attrs: { loading: _vm.loading, size: 100, sizeUnit: _vm.px }
+                })
+              ],
+              1
+            )
           : _vm._l(_vm.types, function(type) {
               return _c(
                 "div",

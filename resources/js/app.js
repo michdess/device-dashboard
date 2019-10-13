@@ -28,10 +28,38 @@ Vue.component('layout', require('./components/Layout.vue').default);
  */
 import router from './router'
 import Layout from './components/Layout.vue'
+import { VueSpinners } from '@saeris/vue-spinners'
+Vue.use(VueSpinners)
 const app = new Vue({
     el: '#app',
     router,
 	components: {
     Layout
   	},
+  	provide() {
+	    return {
+	      deviceState: this.sharedState
+	    }
+  	},
+  	data() {
+	    return {
+	      sharedState: {
+	        devices: [],
+	        loading: true,
+	      }
+	    }
+  	},
+  	mounted(){
+    	this.getDevices();
+  	},
+  	methods: {
+	    getDevices(){
+	      let self = this;
+	      axios.get('/devices')
+	              .then(response => {
+	                  self.sharedState.devices = response.data;
+	                  self.sharedState.loading = false;
+	              }); 
+	    },
+    },
 });
