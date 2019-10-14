@@ -12,14 +12,8 @@
 <script>
   export default {
     props:['device'],
-    data() {
-      return {
-        
-      }
-    },
     methods:{
         openDetails() {
-          // this.showDropDown = false;
           this.$router.push({name: 'detailview', params: { 'id': this.device.id, 'device': this.device }})
         },
     },

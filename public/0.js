@@ -160,8 +160,6 @@ __webpack_require__.r(__webpack_exports__);
       addDeviceModalOpen: false
     };
   },
-  created: function created() {},
-  methods: {},
   computed: {
     loading: function loading() {
       return this.deviceState.loading;
@@ -193,12 +191,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['device'],
-  data: function data() {
-    return {};
-  },
   methods: {
     openDetails: function openDetails() {
-      // this.showDropDown = false;
       this.$router.push({
         name: 'detailview',
         params: {

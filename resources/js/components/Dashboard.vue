@@ -47,12 +47,6 @@ export default {
       addDeviceModalOpen: false,
     }
   },
-  created(){
-
-  },
-  methods:{
-
-  },
   computed:{
     loading(){
         return this.deviceState.loading;
