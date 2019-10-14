@@ -26,6 +26,8 @@
     "dependencies": {
         "@saeris/vue-spinners": "^1.0.8",
         "apexcharts": "^3.9.0",
+        "moment": "^2.24.0",
+        "pikaday": "^1.8.0",
         "portal-vue": "^2.1.6",
         "tailwindcss": "^1.1.2",
         "vue-apexcharts": "^1.5.0",
