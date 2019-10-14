@@ -10,7 +10,7 @@
         <option value="temperature">Temperature</option>
       </select>
       <input v-model.number="value" type="number" class="py-1 px-2 my-2 border-2 border-gray-300 rounded" placeholder="Value (numbers only)" />
-      <date-picker class="py-1 px-2 my-2 border-2 border-gray-300 rounded" v-model="date" format="D MMM YYYY" placeholder="Due On"></date-picker>
+      <date-picker class="py-1 px-2 my-2 border-2 border-gray-300 rounded" v-model="date" format="D MMM YYYY" placeholder="Date"></date-picker>
       <p v-if="errors" class="text-xs text-red-500">Something went wrong - try again</p>
       <div class="flex justify-end">
         <div class="text-center flex justify-end mt-2">
