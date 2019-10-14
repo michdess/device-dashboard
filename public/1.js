@@ -39,6 +39,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['device'],
@@ -49,7 +50,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       types: null,
-      data: ''
+      data: '',
+      noData: false
     };
   },
   methods: {
@@ -58,6 +60,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/devices/' + this.device.id + '/readings').then(function (response) {
         self.data = response.data;
         self.getTypes();
+      })["catch"](function (error) {
+        console.log(error);
+        self.noData = true;
+        self.loading = false;
       });
     },
     getTypes: function getTypes() {
@@ -108,6 +114,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "flex flex-col w-full" }, [
     _c("p", { staticClass: "text-3xl" }, [_vm._v(_vm._s(_vm.device.name))]),
+    _vm._v(" "),
+    _vm.noData
+      ? _c("p", [_vm._v("There are no devices or readings to display")])
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",

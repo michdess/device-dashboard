@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col w-full">
     <p class="text-3xl">{{device.name}}</p>
+    <p v-if="noData">There are no devices or readings to display</p>
     <div class="-mx-2 w-full flex flex-wrap">
         <div v-if="loading" class="absolute top-0 left-0 right-0 bottom-0 flex w-full items-center justify-center">
             <moon-loader :loading="loading" :size="100"></moon-loader>
@@ -38,15 +39,20 @@
         loading:true,
         types: null,
         data: '',
+        noData: false
       }
     },
     methods:{
         getDeviceMeasurements(){
           let self = this;
           axios.get('/devices/'+this.device.id+'/readings')
-                  .then(response => {
+                  .then(function(response){
                     self.data = response.data;
                     self.getTypes();
+                  }).catch(function(error){
+                    console.log(error);
+                    self.noData = true;
+                    self.loading = false;
                   }); 
         },
         getTypes(){

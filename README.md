@@ -1,5 +1,8 @@
 #Device Dashboard
-The device dashboard show the results of an API call to a device list and their device readings. It is built using Laravel and Vue.  
+The device dashboard show the results of an API call to a device list and their device readings. It is built using Laravel and Vue. 
+
+Opening the app will load the device list. Double clicking on a device will open the detail view.
+
 ## Installation
 To install first git clone the repo
 ```
