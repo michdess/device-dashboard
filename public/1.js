@@ -50,30 +50,23 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loading: true,
       types: null,
-      data: '',
       noData: false
     };
   },
   methods: {
-    getDeviceMeasurements: function getDeviceMeasurements() {
-      var self = this;
-      axios.get('/devices/' + this.device.id + '/readings').then(function (response) {
-        self.data = response.data;
-        self.getTypes();
-      })["catch"](function (error) {
-        console.log(error);
-        self.noData = true;
-        self.loading = false;
-      });
-    },
     getTypes: function getTypes() {
-      this.types = new Set(this.data.map(function (item) {
-        return item.type;
-      }));
-      this.loading = false;
+      if (this.device.readings != null) {
+        this.types = new Set(this.device.readings.map(function (item) {
+          return item.type;
+        }));
+        this.loading = false;
+      } else {
+        this.loading = false;
+        this.noData = true;
+      }
     },
     findSeries: function findSeries(type) {
-      var seriesData = this.data.filter(function (item) {
+      var seriesData = this.device.readings.filter(function (item) {
         return item.type === type;
       });
       seriesData = seriesData.sort(function (a, b) {
@@ -91,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.getDeviceMeasurements();
+    this.getTypes();
   }
 });
 

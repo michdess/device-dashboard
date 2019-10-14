@@ -60549,8 +60549,44 @@ var app = new Vue({
       var self = this;
       axios.get('/devices').then(function (response) {
         self.sharedState.devices = response.data;
-        self.sharedState.loading = false;
+        self.getReadings(); // self.sharedState.loading = false;
       });
+    },
+    getReadings: function getReadings() {
+      var _this = this;
+
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var device = _step.value;
+          var self = _this;
+          axios.get('/devices/' + device.id + '/readings').then(function (response) {
+            device.readings = response.data;
+          });
+        };
+
+        for (var _iterator = this.sharedState.devices[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      this.sharedState.loading = false;
     }
   }
 });

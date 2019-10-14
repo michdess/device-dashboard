@@ -522,7 +522,7 @@ var render = function() {
         staticClass:
           "p-4 flex items-center justify-between w-full bg-white shadow-lg rounded cursor-pointer",
         on: {
-          dblclick: function($event) {
+          click: function($event) {
             $event.stopPropagation()
             return _vm.openDetails($event)
           }

@@ -39,8 +39,19 @@ const app = new Vue({
 	      axios.get('/devices')
 	              .then(response => {
 	                  self.sharedState.devices = response.data;
-	                  self.sharedState.loading = false;
+	                  self.getReadings();
+	                  // self.sharedState.loading = false;
 	              }); 
+	    },
+	    getReadings(){
+	    	for(let device of this.sharedState.devices){
+	    		let self = this;
+	    		axios.get('/devices/'+device.id+'/readings')
+	    		.then(response => {
+	                  device.readings = response.data;
+	              }); 
+	    	}
+	        this.sharedState.loading = false;
 	    },
     },
 });

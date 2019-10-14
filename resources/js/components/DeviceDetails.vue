@@ -38,36 +38,28 @@
       return {
         loading:true,
         types: null,
-        data: '',
         noData: false
       }
     },
     methods:{
-        getDeviceMeasurements(){
-          let self = this;
-          axios.get('/devices/'+this.device.id+'/readings')
-                  .then(function(response){
-                    self.data = response.data;
-                    self.getTypes();
-                  }).catch(function(error){
-                    console.log(error);
-                    self.noData = true;
-                    self.loading = false;
-                  }); 
-        },
         getTypes(){
-          this.types = new Set(this.data.map(item => item.type));
-          this.loading = false;
+            if(this.device.readings != null){   
+                this.types = new Set(this.device.readings.map(item => item.type));
+                this.loading = false;
+            } else {
+                this.loading = false;
+                this.noData = true;
+            }
         },
         findSeries(type){
-          let seriesData = this.data.filter(item => item.type === type);
+          let seriesData = this.device.readings.filter(item => item.type === type);
           seriesData = seriesData.sort((a,b) => a.createdAt-b.createdAt);
           let seriesValues = seriesData.map(item => ({x:item.createdAt , y:item.value}));
           return [{data: seriesValues}]
         },
     },
     created(){
-        this.getDeviceMeasurements();
+        this.getTypes();
     }
   }
 </script>
