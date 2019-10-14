@@ -42,6 +42,7 @@
         :id="device.id"
         :show="addReadingModalOpen"
         @close="addReadingModalOpen = false"
+        @refreshGraphs="getTypes"
       ></add-reading-modal>
     </portal>
   </div>
@@ -85,3 +86,8 @@
     }
   }
 </script>
+<style>
+.apexcharts-toolbar{
+    z-index: 0;
+}
+</style>

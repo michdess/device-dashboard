@@ -4,7 +4,7 @@
       <h1 class="text-left text-xl font-bold">
         Add New Reading
       </h1>
-      <select v-model="type">
+      <select v-model="type" class="bg-gray-200 h-8 border">
         <option value="airquality">Air Quality</option>
         <option value="humidity">Humidity</option>
         <option value="temperature">Temperature</option>
@@ -52,14 +52,26 @@ export default {
       if(this.date != null && this.value > 0 && this.value < 999){
         this.$emit("close"); 
         let device = this.deviceState.devices.filter(device => device.id === this.id);
-        console.log(device);
-        device[0].readings.push({ 
-          'id' : device.readings ? device.readings.length+1 : 1, 
-          'type': this.type,
-          'value': this.value,
-          'createdAt': this.date,
-          'updatedAt': this.date,
-        });     
+        if(device[0].readings){
+            device[0].readings.push({ 
+              'id' : device.readings ? device.readings.length+1 : 1, 
+              'type': this.type,
+              'value': this.value,
+              'createdAt': this.date,
+              'updatedAt': this.date,
+            });
+            this.$emit("refreshGraphs"); 
+        } else {
+          console.log(device[0]);
+            device[0].readings =  [{
+                'id' : 1, 
+                'type': this.type,
+                'value': this.value,
+                'createdAt': this.date,
+                'updatedAt': this.date,
+            }];
+            this.$emit("refreshGraphs"); 
+        }    
       } else {
         this.errors = true;
       }
