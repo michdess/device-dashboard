@@ -43,7 +43,7 @@ export default {
     },
     confirmAdd(e) {
       e.preventDefault();
-      if(this.name.length > 0 && this.type.length > 0 && this.value.length <= 3 && this.value.length > 0){
+      if(this.name.length > 0 && this.type.length > 0 && this.value > 0 && this.value < 999){
         this.$emit("close"); 
         this.deviceState.devices.push({ 
           'id' : this.deviceState.devices.length+1, 

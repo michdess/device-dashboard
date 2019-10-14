@@ -122,7 +122,7 @@ var render = function() {
               },
               [
                 _c("moon-loader", {
-                  attrs: { loading: _vm.loading, size: 100, sizeUnit: _vm.px }
+                  attrs: { loading: _vm.loading, size: 100 }
                 })
               ],
               1
