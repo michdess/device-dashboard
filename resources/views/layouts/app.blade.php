@@ -14,6 +14,7 @@
 <body>
     <div id="app">
             @yield('content')
+            <portal-target name="modals"></portal-target>
     </div>
 </body>
 </html>

@@ -1,11 +1,11 @@
 <template>
   <div class="w-full max-w-full flex flex-wrap">
     <div v-if="loading" class="absolute top-0 left-0 right-0 bottom-0 flex w-full items-center justify-center">
-    <moon-loader :loading="loading" :size="100" :sizeUnit="px"></moon-loader>
-  </div>
+      <moon-loader :loading="loading" :size="100"></moon-loader>
+    </div>
     <template v-else>
         <div class="flex w-full sm:w-1/2 lg:w-1/5 p-2">
-          <div class="p-4 flex items-center justify-between w-full bg-white shadow-lg rounded cursor-pointer" @click="addDevice">
+          <div class="p-4 flex items-center justify-between w-full bg-white shadow-lg rounded cursor-pointer" @click="addDeviceModalOpen =! addDeviceModalOpen">
             <div class="flex flex-col">
               <p class="mt-1 text-gray-900 font-semibold text-lg">Add new device</p>
             </div>
@@ -22,39 +22,36 @@
         </div>
         <DeviceCard v-for="device in deviceState.devices" :key="device.id" :device="device"></DeviceCard>
       </template>
+      <portal to="modals" v-if="addDeviceModalOpen">
+          <add-device-modal
+            :show="addDeviceModalOpen"
+            @close="addDeviceModalOpen = false"
+          ></add-device-modal>
+      </portal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import DeviceCard from './DeviceCard';
+import AddDeviceModal from './AddDeviceModal';
 export default {
   inject: ["deviceState"],
   name: 'Dashboard',
   components:{
-    DeviceCard
+    DeviceCard,
+    AddDeviceModal
   },
   data(){
     return{
-      devices: '',
-      // loading: true,
+      addDeviceModalOpen: false,
     }
   },
   created(){
-    // this.getDevices();
+
   },
   methods:{
-    getDevices(){
-      let self = this;
-      axios.get('/devices')
-              .then(response => {
-                  self.devices = response.data;
-                  // self.loading = false;
-              }); 
-    },
-    addDevice(){
-      this.devices.push({'id': this.devices.length + 1, 'type': 'some type', 'name': 'New Device', 'value': '12'});
-    },
+
   },
   computed:{
     loading(){
